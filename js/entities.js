@@ -43,7 +43,7 @@ var MissileEntity = me.ObjectEntity.extend(
 			me.game.remove(this);
 
 			// update score
-			me.game.HUD.updateItemValue("score", 10);
+			game.data.score += 10;
 		}
 
 		return true;
@@ -76,9 +76,6 @@ var PlayerEntity = me.ObjectEntity.extend(
 		// init variables
 		this.gravity = 0;
 		this.alwaysUpdate = true;
-
-		// enable collision
-		this.collidable = true;
 	},
 
 	/*
@@ -133,7 +130,6 @@ var PlayerEntity = me.ObjectEntity.extend(
 			var missile = new MissileEntity(this.pos.x + this.width,
 												this.pos.y + this.height / 2 - 3);
 			me.game.add(missile, this.z);
-			me.game.sort();
 		}
 
 		// check & update player movement
@@ -160,14 +156,13 @@ var PlayerEntity = me.ObjectEntity.extend(
 			me.audio.play("clash");
 
 			// update life indicator
-			me.game.HUD.updateItemValue("life", -1);
+			game.data.life -= 1;
 
 			// if no more lives
-			if (me.game.HUD.getItemValue("life") <= 0)
+			if (game.data.life < 1)
 			{
 				// game over
-				me.state.change(me.state.GAMEOVER,
-					me.game.HUD.getItemValue("score"));
+				me.state.change(me.state.GAMEOVER);
 				return;
 			}
 
@@ -244,7 +239,6 @@ var EnemyEntity = me.ObjectEntity.extend(
 		// init implosion
 		var implosion = new Implosion(this.pos.x, this.pos.y);
 		me.game.add(implosion, 15);
-		me.game.sort();
 
 		// remove this entity
 		me.game.remove(this);
@@ -271,7 +265,7 @@ var EnemyFleet = Object.extend(
 	 */
 	update: function()
 	{
-		// every 1/12 second
+		// every 1/18 second
 		if ((this.fps++) % 18 == 0)
 		{
 			var x = me.video.getWidth();
@@ -279,7 +273,6 @@ var EnemyFleet = Object.extend(
 
 			// add an enemy
 			me.game.add(new EnemyEntity(x, y), 10);
-			me.game.sort();
 		}
 
 		return true;

@@ -1,40 +1,7 @@
 /*
- * loading screen
- */
-var LoadingScreen = me.ScreenObject.extend(
-{
-	/*
-	 * constructor
-	 */
-	init: function()
-	{
-		this.parent(true);
-		this.bg = new Image();
-		this.bg.src = "img/bkg0.png";
-		this.loading = new me.Font("Verdana", 20, "white");
-	},
-
-	/*
-	 * drawing function
-	 */
-	draw: function(context)
-	{
-		// clear the screen
-		me.video.clearSurface(context, "black");
-		context.drawImage(this.bg, 0, 0);
-
-		var loadingText = "Loading...";
-		var loadingSize = this.loading.measureText(context, loadingText);
-		this.loading.draw(context, loadingText,
-			(me.video.getWidth() / 2) - (loadingSize.width / 2),
-			(me.video.getHeight() / 2) - (loadingSize.height / 2));
-	}
-});
-
-/*
  * menu screen
  */
-var MenuScreen = me.ScreenObject.extend(
+game.MenuScreen = me.ScreenObject.extend(
 {
 	/*
 	 * constructor
@@ -42,7 +9,7 @@ var MenuScreen = me.ScreenObject.extend(
 	init: function()
 	{
 		// call parent constructor
-		this.parent(true, true);
+		this.parent(true);
 
 		// init stuff
 		this.title = null;
@@ -58,13 +25,8 @@ var MenuScreen = me.ScreenObject.extend(
 		// add parallax background
 		me.game.add(new BackgroundObject(), 1);
 
-		// load title image
 		this.title = me.loader.getImage("title");
-
-		// play button
 		this.play = new Button("play", me.state.PLAY, 280);
-
-		// version
 		this.version = new me.Font("Verdana", 20, "white");
 	},
 
@@ -80,10 +42,8 @@ var MenuScreen = me.ScreenObject.extend(
 		this.play.draw(context);
 
 		// game version
-		var versionText = "0.4";
-		var versionSize = this.version.measureText(context, versionText);
-
-		this.version.draw(context, versionText,
+		var versionSize = this.version.measureText(context, game.data.version);
+		this.version.draw(context, game.data.version,
 			me.video.getWidth() - versionSize.width - 2, me.video.getHeight() - versionSize.height);
 	},
 
@@ -100,33 +60,26 @@ var MenuScreen = me.ScreenObject.extend(
 /*
  * play screen
  */
-var PlayScreen = me.ScreenObject.extend(
+game.PlayScreen = me.ScreenObject.extend(
 {
 	/*
 	 * action to perform when game starts
 	 */
 	onResetEvent: function()
 	{
-		// add a default HUD
-		me.game.addHUD(0, 0, me.video.getWidth(), 45);
+		// reset the score
+		game.data.score = 0;
+		game.data.life = 3;
 
-		// add a new HUD item
-		me.game.HUD.addItem("life", new LifeObject(3));
-
-		// add a new HUD item
-		me.game.HUD.addItem("score", new ScoreObject());
+		// add HUD to the game world
+		me.game.add(new game.HUD.Container());
 
 		// add parallax background
 		me.game.add(new BackgroundObject(), 1);
 
-		// add main player
+		// add main player and enemy fleet
 		me.game.add(new PlayerEntity(100, 205), 10);
-
-		// add enemy fleet
 		me.game.add(new EnemyFleet(), 10);
-
-		// make sure everything is in the right order
-		me.game.sort();
 	},
 
     /*
@@ -134,15 +87,15 @@ var PlayScreen = me.ScreenObject.extend(
      */
 	onDestroyEvent: function()
 	{
-		// remove the HUD
-		me.game.disableHUD();
+		// remove the HUD from the game world
+		me.game.remove(me.game.world.getEntityByProp("name", "HUD")[0]);
 	}
 });
 
 /*
  * game over screen
  */
-var GameOverScreen = me.ScreenObject.extend(
+game.GameOverScreen = me.ScreenObject.extend(
 {
 	/*
 	 * constructor
@@ -157,16 +110,13 @@ var GameOverScreen = me.ScreenObject.extend(
 		this.score = null;
 		this.restart = null;
 		this.menu = null;
-		this.finalScore = null;
 	},
 
 	/*
 	 * reset function
 	 */
-	onResetEvent: function(score)
+	onResetEvent: function()
 	{
-		this.finalScore = score;
-
 		// add parallax background
 		me.game.add(new BackgroundObject(), 1);
 
@@ -189,14 +139,14 @@ var GameOverScreen = me.ScreenObject.extend(
 		this.menu.draw(context);
 
 		// draw end label
-		var endText = "Level completed !";
+		var endText = "Game over !";
 		var endSize = this.end.measureText(context, endText);
 
 		this.end.draw(context, endText,
 			me.video.getWidth() / 2 - endSize.width / 2, 120);
 
 		// draw score label
-		var scoreText = "Score : " + this.finalScore;
+		var scoreText = "Score : " + game.data.score;
 		var scoreSize = this.score.measureText(context, scoreText);
 
 		this.score.draw(context, scoreText,

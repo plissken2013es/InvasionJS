@@ -1,72 +1,4 @@
 /*
- * HUD life item
- */
-var LifeObject = me.HUD_Item.extend(
-{
-	/*
-	 * constructor
-	 */
-	init: function(lives)
-	{
-		// call the parent constructor
-		this.parent(me.video.getWidth() - 145, 5, lives);
-
-		// create image
-		this.image = me.loader.getImage("life" + lives);
-	},
-
-	/*
-	 * decrease life count
-	 */
-	update: function(value)
-	{
-		this.value += value;
-
-		// updating life count
-		this.image = me.loader.getImage("life" + this.value);
-		return true;
-	},
-
-	/*
-	 * drawing function
-	 */
-	draw: function(context, x, y)
-	{
-		// draw life indicator
-		context.drawImage(this.image, this.pos.x + x, this.pos.y + y);
-	}
-});
-
-/*
- * HUD score item
- */
-var ScoreObject = me.HUD_Item.extend(
-{
-	/*
-	 * constructor
-	 */
-	init: function()
-	{
-		// call the parent constructor
-		this.parent(0, 0);
-
-		// create a font
-		this.score = new me.Font("Verdana", 20, "white");
-	},
-
-	/*
-	 * draw score
-	 */
-	draw: function(context, x, y)
-	{
-		var scoreText = "Score : " + this.value;
-		var scoreSize = this.score.measureText(context, scoreText);
-
-		this.score.draw(context, scoreText, 3, 3);
-	}
-});
-
-/*
  * draw a button on screen
  */
 var Button = me.Rect.extend(
@@ -169,7 +101,6 @@ var BackgroundObject = Object.extend(
 	{
 		me.game.add(new BackgroundLayer("bkg0", 0.9), 1); // layer 1
 		me.game.add(new BackgroundLayer("bkg1", 1.5), 2); // layer 2
-		me.game.sort();
 	},
 
 	/*
