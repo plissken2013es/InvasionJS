@@ -1,35 +1,14 @@
 /*
- * menu screen
+ * base screen
  */
-game.MenuScreen = me.ScreenObject.extend(
+game.BaseScreen = me.ScreenObject.extend(
 {
 	/*
 	 * constructor
 	 */
 	init: function()
 	{
-		// call parent constructor
 		this.parent(true);
-
-		// init stuff
-		this.title = null;
-		this.play = null;
-		this.version = null;
-	},
-
-	/*
-	 * reset function
-	 */
-	onResetEvent: function()
-	{
-		// add parallax background
-		me.game.add(new BackgroundObject(), 1);
-
-		this.title = me.loader.getImage("title");
-		this.play = new Button("play", me.state.PLAY, 280);
-		this.version = new me.Font("Verdana", 20, "white");
-
-		me.audio.play("menu_theme");
 	},
 
 	/*
@@ -50,6 +29,41 @@ game.MenuScreen = me.ScreenObject.extend(
 				game.data.audioMuted = true;
 			}
 		}
+	},
+});
+
+/*
+ * menu screen
+ */
+game.MenuScreen = game.BaseScreen.extend(
+{
+	/*
+	 * constructor
+	 */
+	init: function()
+	{
+		// call parent constructor
+		this.parent();
+
+		// init stuff
+		this.title = null;
+		this.play = null;
+		this.version = null;
+	},
+
+	/*
+	 * reset function
+	 */
+	onResetEvent: function()
+	{
+		// add parallax background
+		me.game.add(new BackgroundObject(), 1);
+
+		this.title = me.loader.getImage("title");
+		this.play = new Button("play", me.state.PLAY, 280);
+		this.version = new me.Font("Verdana", 20, "white");
+
+		me.audio.play("menu_theme");
 	},
 
 	/*
@@ -84,17 +98,8 @@ game.MenuScreen = me.ScreenObject.extend(
 /*
  * play screen
  */
-game.PlayScreen = me.ScreenObject.extend(
+game.PlayScreen = game.BaseScreen.extend(
 {
-	/*
-	 * constructor
-	 */
-	init: function()
-	{
-		// call parent constructor
-		this.parent(true);
-	},
-
 	/*
 	 * action to perform when game starts
 	 */
@@ -117,26 +122,6 @@ game.PlayScreen = me.ScreenObject.extend(
 		me.audio.play("game_theme");
 	},
 
-	/*
-	 * update function
-	 */
-	update: function()
-	{
-		if (me.input.isKeyPressed("mute"))
-		{
-			if (game.data.audioMuted)
-			{
-				me.audio.unmuteAll();
-				game.data.audioMuted = false;
-			}
-			else
-			{
-				me.audio.muteAll();
-				game.data.audioMuted = true;
-			}
-		}
-	},
-
     /*
      * action to perform when game is finished (state change)
      */
@@ -152,7 +137,7 @@ game.PlayScreen = me.ScreenObject.extend(
 /*
  * game over screen
  */
-game.GameOverScreen = me.ScreenObject.extend(
+game.GameOverScreen = game.BaseScreen.extend(
 {
 	/*
 	 * constructor
