@@ -2,8 +2,79 @@
  * main functions
  */
 
+var game =
+{
+	/*
+	 * an object where to store game global data
+	 */
+	data:
+	{
+		score: -1,
+		life: -1,
+		version: "0.5"
+	},
+
+	/*
+	 * Initialize the game
+	 */
+	onload: function()
+	{
+		// init the video
+		if (!me.video.init("screen", 800, 450))
+		{
+			alert("Your browser does not support HTML5 canvas.");
+			return;
+		}
+
+		// initialize the audio
+		me.audio.init("mp3,ogg");
+
+		// set a callback to run when loading is complete
+		me.loader.onload = this.loaded.bind(this);
+
+		// load the resources
+		me.loader.preload(game.resources);
+
+		// initialize melonJS and display a loading screen
+		me.state.change(me.state.LOADING);
+	},
+
+	/*
+	 * callback when everything is loaded
+	 */
+	loaded: function ()
+	{
+		// set the "Menu" Screen Object
+		me.state.set(me.state.MENU, new game.MenuScreen());
+
+		// set the "Play" Screen Object
+		me.state.set(me.state.PLAY, new game.PlayScreen());
+
+		// set the "Game over" Screen Object
+		me.state.set(me.state.GAMEOVER, new game.GameOverScreen());
+
+		// set a global fading transition for the screen
+		me.state.transition("fade", "#FFFFFF", 250);
+
+		// disable transition for MENU and GAMEOVER screen
+		me.state.setTransition(me.state.MENU, false);
+		me.state.setTransition(me.state.GAMEOVER, false);
+
+		// enable the keyboard
+		me.input.bindKey(me.input.KEY.LEFT, "left");
+		me.input.bindKey(me.input.KEY.RIGHT, "right");
+		me.input.bindKey(me.input.KEY.UP, "up");
+		me.input.bindKey(me.input.KEY.DOWN, "down");
+		me.input.bindKey(me.input.KEY.SPACE, "fire", true);
+
+		// start the game
+		me.state.change(me.state.MENU);
+	}
+}; // game
+
 // game resources
-var g_resources = [
+game.resources =
+[
 	// parallax background
 	{name: "bkg0", type:"image", src: "img/bkg0.png"},
 	{name: "bkg1", type:"image", src: "img/bkg1.png"},
@@ -34,71 +105,3 @@ var g_resources = [
 	{name: "missile", type:"audio", src: "sound/", channel: 5},
 	{name: "implosion", type:"audio", src: "sound/", channel: 3}
 ];
-
-
-var jsApp =
-{
-	/*
-	 * Initialize the jsApp
-	 */
-	onload: function()
-	{
-		// init the video
-		if (!me.video.init("jsapp", 800, 450))
-		{
-			alert("Sorry but your browser does not support html 5 canvas. Please try with another one!");
-			return;
-		}
-
-		// initialize the audio
-		me.audio.init("mp3,ogg");
-
-		// set all resources to be loaded
-		me.loader.onload = this.loaded.bind(this);
-		me.loader.preload(g_resources);
-
-		// set the "Loading" Screen Object
-		me.state.set(me.state.LOADING, new LoadingScreen());
-
-		// load everything & display a loading screen
-		me.state.change(me.state.LOADING);
-	},
-
-	/*
-	 * callback when everything is loaded
-	 */
-	loaded: function ()
-	{
-		// set the "Menu" Screen Object
-		me.state.set(me.state.MENU, new MenuScreen());
-
-		// set the "Play" Screen Object
-		me.state.set(me.state.PLAY, new PlayScreen());
-
-		// set the "Game over" Screen Object
-		me.state.set(me.state.GAMEOVER, new GameOverScreen());
-
-		// set a global fading transition for the screen
-		me.state.transition("fade", "#FFFFFF", 250);
-
-		// disable transition for MENU and GAMEOVER screen
-		me.state.setTransition(me.state.MENU, false);
-		me.state.setTransition(me.state.GAMEOVER, false);
-
-		// enable the keyboard
-		me.input.bindKey(me.input.KEY.LEFT, "left");
-		me.input.bindKey(me.input.KEY.RIGHT, "right");
-		me.input.bindKey(me.input.KEY.UP, "up");
-		me.input.bindKey(me.input.KEY.DOWN, "down");
-		me.input.bindKey(me.input.KEY.SPACE, "fire", true);
-
-		// draw menu
-		me.state.change(me.state.MENU);
-	}
-}; // jsApp
-
-// bootstrap :)
-window.onReady(function()
-{
-	jsApp.onload();
-});
