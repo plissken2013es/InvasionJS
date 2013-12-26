@@ -11,6 +11,7 @@ var game =
 	{
 		score: -1,
 		life: -1,
+		audioMuted: false,
 		version: "0.5"
 	},
 
@@ -66,6 +67,7 @@ var game =
 		me.input.bindKey(me.input.KEY.UP, "up");
 		me.input.bindKey(me.input.KEY.DOWN, "down");
 		me.input.bindKey(me.input.KEY.SPACE, "fire", true);
+		me.input.bindKey(me.input.KEY.M, "mute", true);
 
 		// start the game
 		me.state.change(me.state.MENU);
@@ -100,7 +102,11 @@ game.resources =
 	{name: "missile", type:"image", src: "img/missile.png"},
 	{name: "implosion", type:"image", src: "img/implosion.png"},
 
-	// audio
+	// music
+	{name: "menu_theme", type:"audio", src: "music/", channel: 1},
+	{name: "game_theme", type:"audio", src: "music/", channel: 1},
+
+	// sound
 	{name: "clash", type:"audio", src: "sound/", channel: 1},
 	{name: "missile", type:"audio", src: "sound/", channel: 5},
 	{name: "implosion", type:"audio", src: "sound/", channel: 3}

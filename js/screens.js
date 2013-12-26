@@ -28,6 +28,28 @@ game.MenuScreen = me.ScreenObject.extend(
 		this.title = me.loader.getImage("title");
 		this.play = new Button("play", me.state.PLAY, 280);
 		this.version = new me.Font("Verdana", 20, "white");
+
+		me.audio.play("menu_theme");
+	},
+
+	/*
+	 * update function
+	 */
+	update: function()
+	{
+		if (me.input.isKeyPressed("mute"))
+		{
+			if (game.data.audioMuted)
+			{
+				me.audio.unmuteAll();
+				game.data.audioMuted = false;
+			}
+			else
+			{
+				me.audio.muteAll();
+				game.data.audioMuted = true;
+			}
+		}
 	},
 
 	/*
@@ -54,6 +76,8 @@ game.MenuScreen = me.ScreenObject.extend(
 	{
 		// release mouse event
 		me.input.releasePointerEvent("mousedown", this.play);
+
+		me.audio.stop("menu_theme");
 	}
 });
 
@@ -62,6 +86,15 @@ game.MenuScreen = me.ScreenObject.extend(
  */
 game.PlayScreen = me.ScreenObject.extend(
 {
+	/*
+	 * constructor
+	 */
+	init: function()
+	{
+		// call parent constructor
+		this.parent(true);
+	},
+
 	/*
 	 * action to perform when game starts
 	 */
@@ -80,6 +113,28 @@ game.PlayScreen = me.ScreenObject.extend(
 		// add main player and enemy fleet
 		me.game.add(new PlayerEntity(100, 205), 10);
 		me.game.add(new EnemyFleet(), 10);
+
+		me.audio.play("game_theme");
+	},
+
+	/*
+	 * update function
+	 */
+	update: function()
+	{
+		if (me.input.isKeyPressed("mute"))
+		{
+			if (game.data.audioMuted)
+			{
+				me.audio.unmuteAll();
+				game.data.audioMuted = false;
+			}
+			else
+			{
+				me.audio.muteAll();
+				game.data.audioMuted = true;
+			}
+		}
 	},
 
     /*
@@ -89,6 +144,8 @@ game.PlayScreen = me.ScreenObject.extend(
 	{
 		// remove the HUD from the game world
 		me.game.remove(me.game.world.getEntityByProp("name", "HUD")[0]);
+
+		me.audio.stop("game_theme");
 	}
 });
 
