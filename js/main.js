@@ -103,36 +103,36 @@ var game =
 game.resources =
 [
 	// parallax background
-	{name: "bkg0", type:"image", src: "img/bkg0.png"},
-	{name: "bkg1", type:"image", src: "img/bkg1.png"},
+	{name: "bkg0", type: "image", src: "img/bkg0.png"},
+	{name: "bkg1", type: "image", src: "img/bkg1.png"},
 
 	// interface
-	{name: "title", type:"image", src: "img/title.png"},
-	{name: "play", type:"image", src: "img/play.png"},
-	{name: "play_hover", type:"image", src: "img/play_hover.png"},
-	{name: "restart", type:"image", src: "img/restart.png"},
-	{name: "restart_hover", type:"image", src: "img/restart_hover.png"},
-	{name: "menu", type:"image", src: "img/menu.png"},
-	{name: "menu_hover", type:"image", src: "img/menu_hover.png"},
+	{name: "title", type: "image", src: "img/title.png"},
+	{name: "play", type: "image", src: "img/play.png"},
+	{name: "play_hover", type: "image", src: "img/play_hover.png"},
+	{name: "restart", type: "image", src: "img/restart.png"},
+	{name: "restart_hover", type: "image", src: "img/restart_hover.png"},
+	{name: "menu", type: "image", src: "img/menu.png"},
+	{name: "menu_hover", type: "image", src: "img/menu_hover.png"},
 
 	// life
-	{name: "life0", type:"image", src: "img/life0.png"},
-	{name: "life1", type:"image", src: "img/life1.png"},
-	{name: "life2", type:"image", src: "img/life2.png"},
-	{name: "life3", type:"image", src: "img/life3.png"},
+	{name: "life0", type: "image", src: "img/life0.png"},
+	{name: "life1", type: "image", src: "img/life1.png"},
+	{name: "life2", type: "image", src: "img/life2.png"},
+	{name: "life3", type: "image", src: "img/life3.png"},
 
 	// game
-	{name: "ship", type:"image", src: "img/ship.png"},
-	{name: "enemy", type:"image", src: "img/enemy.png"},
-	{name: "missile", type:"image", src: "img/missile.png"},
-	{name: "implosion", type:"image", src: "img/implosion.png"},
+	{name: "ship", type: "image", src: "img/ship.png"},
+	{name: "enemy", type: "image", src: "img/enemy.png"},
+	{name: "missile", type: "image", src: "img/missile.png"},
+	{name: "implosion", type: "image", src: "img/implosion.png"},
 
 	// music
-	{name: "menu_theme", type:"audio", src: "music/", channel: 1},
-	{name: "game_theme", type:"audio", src: "music/", channel: 1},
+	{name: "menu_theme", type: "audio", src: "music/", channel: 1},
+	{name: "game_theme", type: "audio", src: "music/", channel: 1},
 
 	// sound
-	{name: "clash", type:"audio", src: "sound/", channel: 1},
-	{name: "missile", type:"audio", src: "sound/", channel: 5},
-	{name: "implosion", type:"audio", src: "sound/", channel: 3}
+	{name: "clash", type: "audio", src: "sound/", channel: 1},
+	{name: "missile", type: "audio", src: "sound/", channel: 5},
+	{name: "implosion", type: "audio", src: "sound/", channel: 3}
 ];

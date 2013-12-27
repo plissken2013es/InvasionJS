@@ -170,7 +170,7 @@ game.GameOverScreen = game.BaseScreen.extend(
 	init: function()
 	{
 		// call parent constructor
-		this.parent(true, true);
+		this.parent();
 
 		// init stuff
 		this.end = null;
