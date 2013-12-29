@@ -24,43 +24,9 @@
  */
 
 /*
- * base screen
- */
-game.BaseScreen = me.ScreenObject.extend(
-{
-	/*
-	 * constructor
-	 */
-	init: function()
-	{
-		this.parent(true);
-	},
-
-	/*
-	 * update function
-	 */
-	update: function()
-	{
-		if (me.input.isKeyPressed("mute"))
-		{
-			if (game.data.audioMuted)
-			{
-				me.audio.unmuteAll();
-				game.data.audioMuted = false;
-			}
-			else
-			{
-				me.audio.muteAll();
-				game.data.audioMuted = true;
-			}
-		}
-	},
-});
-
-/*
  * menu screen
  */
-game.MenuScreen = game.BaseScreen.extend(
+game.MenuScreen = me.ScreenObject.extend(
 {
 	/*
 	 * constructor
@@ -68,7 +34,7 @@ game.MenuScreen = game.BaseScreen.extend(
 	init: function()
 	{
 		// call parent constructor
-		this.parent();
+		this.parent(true);
 
 		// init stuff
 		this.title = null;
@@ -123,7 +89,7 @@ game.MenuScreen = game.BaseScreen.extend(
 /*
  * play screen
  */
-game.PlayScreen = game.BaseScreen.extend(
+game.PlayScreen = me.ScreenObject.extend(
 {
 	/*
 	 * action to perform when game starts
@@ -162,7 +128,7 @@ game.PlayScreen = game.BaseScreen.extend(
 /*
  * game over screen
  */
-game.GameOverScreen = game.BaseScreen.extend(
+game.GameOverScreen = me.ScreenObject.extend(
 {
 	/*
 	 * constructor
@@ -170,7 +136,7 @@ game.GameOverScreen = game.BaseScreen.extend(
 	init: function()
 	{
 		// call parent constructor
-		this.parent();
+		this.parent(true);
 
 		// init stuff
 		this.end = null;

@@ -36,7 +36,6 @@ var game =
 	{
 		score: -1,
 		life: -1,
-		audioMuted: false,
 		version: "0.5"
 	},
 
@@ -92,7 +91,6 @@ var game =
 		me.input.bindKey(me.input.KEY.UP, "up");
 		me.input.bindKey(me.input.KEY.DOWN, "down");
 		me.input.bindKey(me.input.KEY.SPACE, "fire", true);
-		me.input.bindKey(me.input.KEY.M, "mute", true);
 		me.input.bindTouch(me.input.KEY.SPACE);
 
 		// start the game
