@@ -6,7 +6,7 @@ Invasion is a shoot'em up : You're a space ship, just kill those damn aliens !
 
 Invasion is developed in JavaScript with melonJS 0.9.11.
 
-Online demo : http://invasion.semche.com/
+Online demo : http://invasion-game.github.io/InvasionJS/
 
 ## Developers :
 - Gwillald, www.gwillald.com
